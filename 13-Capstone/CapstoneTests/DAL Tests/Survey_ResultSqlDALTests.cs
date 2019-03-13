@@ -67,6 +67,5 @@ namespace CapstoneTests.DAL_Tests
             Assert.AreEqual(true, addSuccessful);
             Assert.AreEqual(priorResults.Count + 1, newResults.Count);
         }
-
     }
 }
