@@ -29,7 +29,5 @@ namespace CapstoneTests.DAL_Tests
         {
             tran.Dispose();
         }
-
-
     }
 }
