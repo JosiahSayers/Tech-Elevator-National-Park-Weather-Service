@@ -60,6 +60,28 @@ namespace Capstone.Web.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Settings()
+        {
+            SettingsViewModel model = new SettingsViewModel();
+            if (ViewBag.TemperaturePreference != null)
+            {
+                model.TemperatureSetting = ViewBag.TemperaturePreference;
+            }
+            else
+            {
+                model.TemperatureSetting = "fahrenheit";
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Settings(string data)
+        {
+            ViewBag.TemperaturePreference = data;
+            return RedirectToAction("Index");
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
