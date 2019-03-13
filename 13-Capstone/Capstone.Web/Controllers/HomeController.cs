@@ -32,8 +32,10 @@ namespace Capstone.Web.Controllers
 
         public IActionResult Details(string data)
         {
-            Park park = parkDAL.GetPark(data);
-            return View(park);
+            DetailsViewModel model = new DetailsViewModel();
+            model.Park = parkDAL.GetPark(data);
+            model.FiveDayWeather = weatherDAL.GetWeatherForPark(data);
+            return View(model);
         }
 
         [HttpGet]

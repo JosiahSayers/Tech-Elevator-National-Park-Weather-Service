@@ -1,23 +1,52 @@
-﻿@model Capstone.Web.Models.Park
+﻿@model Capstone.Web.Models.DetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<img src="~/images/parks/@(Model.Code).jpg" alt="@Model.Name" />
+<img src="~/images/parks/@(Model.Park.Code).jpg" alt="@Model.Park.Name" />
 
-<h3>@Model.Name</h3>
+<div class="parkInfo">
+    <h1>@Model.Park.Name</h1>
 
-<p>@Model.Description</p>
+    <p>@Model.Park.Description</p>
 
-<p><strong>State:</strong> @Model.State</p>
-<p><strong>Acreage:</strong> @Model.Acreage</p>
-<p><strong>Elevation:</strong> @Model.ElevationFt ft.</p>
-<p><strong>Miles of Trail:</strong> @Model.MilesOfTrail</p>
-<p><strong>Number of Campsites:</strong> @Model.NumberOfCampsites</p>
-<p><strong>Climate:</strong> @Model.Climate</p>
-<p><strong>Year Founded:</strong> @Model.YearFounded</p>
-<p><strong>Annual Visitors:</strong> @Model.AnnualVisitorCount</p>
-<p><strong>Inspirational Quote:</strong> @Model.InspirationalQuote</p> - @Model.QuoteSource
-<p><strong>Entry Fee:</strong> @Model.EntryFee.ToString("c2")</p>
-<p><strong>Number of Animal Species:</strong> @Model.NumberOfSpecies</p>
+    <p><strong>State:</strong> @Model.Park.State</p>
+    <p><strong>Acreage:</strong> @Model.Park.Acreage</p>
+    <p><strong>Elevation:</strong> @Model.Park.ElevationFt ft.</p>
+    <p><strong>Miles of Trail:</strong> @Model.Park.MilesOfTrail</p>
+    <p><strong>Number of Campsites:</strong> @Model.Park.NumberOfCampsites</p>
+    <p><strong>Climate:</strong> @Model.Park.Climate</p>
+    <p><strong>Year Founded:</strong> @Model.Park.YearFounded</p>
+    <p><strong>Annual Visitors:</strong> @Model.Park.AnnualVisitorCount</p>
+    <p><strong>Inspirational Quote:</strong> @Model.Park.InspirationalQuote</p> - @Model.Park.QuoteSource
+    <p><strong>Entry Fee:</strong> @Model.Park.EntryFee.ToString("c2")</p>
+    <p><strong>Number of Animal Species:</strong> @Model.Park.NumberOfSpecies</p>
+</div>
+
+<div class="weather">
+    <div class="today">
+        <h3>Today</h3>
+        <img src="~/images/weather/@(Model.FiveDayWeather[0].Forecast).png" alt="Alternate Text" />
+        <div class="hi-low">
+            <span>High @Model.FiveDayWeather[0].HighTemp</span>
+            <span>Low @Model.FiveDayWeather[0].LowTemp</span>
+        </div>
+        <span class="forecast-message">@Model.FiveDayWeather[0].ForecastMessage</span>
+        <span class="temperature-message">@Model.FiveDayWeather[0].TemperatureMessage</span>
+    </div>
+
+@for (int i = 1; i < Model.FiveDayWeather.Count; i++)
+{
+    <div class="daily-forecast">
+        <img src="~/images/weather/@(Model.FiveDayWeather[i].Forecast).png" alt="@Model.FiveDayWeather[i].Forecast" />
+        <div class="hi-low">
+            <span>High @Model.FiveDayWeather[i].HighTemp</span>
+            <span>Low @Model.FiveDayWeather[i].LowTemp</span>
+        </div>
+        <span class="forecast-message">@Model.FiveDayWeather[i].ForecastMessage</span>
+        <span class="temperature-message">@Model.FiveDayWeather[i].TemperatureMessage</span>
+    </div>
+}
+
+</div>
