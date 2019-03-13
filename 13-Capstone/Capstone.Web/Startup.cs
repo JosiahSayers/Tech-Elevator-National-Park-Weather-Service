@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Capstone.Web.DAL;
+using Capstone.Web.DAL.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,6 +32,11 @@ namespace Capstone.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            string connectionString = Configuration.GetConnectionString("Default");
+
+            services.AddScoped<IParkSqlDAL, ParkSqlDAL>(c => new ParkSqlDAL(connectionString));
+            services.AddScoped<ISurvey_ResultSqlDAL, Survey_ResultSqlDAL>(c => new Survey_ResultSqlDAL(connectionString));
+            services.AddScoped<IWeatherSqlDAL, WeatherSqlDAL>(c => new WeatherSqlDAL(connectionString));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

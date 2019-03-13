@@ -15,7 +15,24 @@ namespace Capstone.Web.Controllers
             return View();
         }
 
-      
+        public IActionResult Details(string Id)
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Survey()
+        {
+            return View();
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public IActionResult Survey(Survey_Result surveyResult)
+        {
+            return View();
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
