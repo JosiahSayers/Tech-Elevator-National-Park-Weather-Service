@@ -9,5 +9,7 @@ namespace Capstone.Web.DAL.Interfaces
     public interface ISurvey_ResultSqlDAL
     {
         List<Survey_Result> GetAllSurveys();
+
+
     }
 }
