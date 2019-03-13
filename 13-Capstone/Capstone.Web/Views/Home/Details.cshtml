@@ -1,0 +1,23 @@
+﻿@model Capstone.Web.Models.Park
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<img src="~/images/parks/@(Model.Code).jpg" alt="@Model.Name" />
+
+<h3>@Model.Name</h3>
+
+<p>@Model.Description</p>
+
+<p><strong>State:</strong> @Model.State</p>
+<p><strong>Acreage:</strong> @Model.Acreage</p>
+<p><strong>Elevation:</strong> @Model.ElevationFt ft.</p>
+<p><strong>Miles of Trail:</strong> @Model.MilesOfTrail</p>
+<p><strong>Number of Campsites:</strong> @Model.NumberOfCampsites</p>
+<p><strong>Climate:</strong> @Model.Climate</p>
+<p><strong>Year Founded:</strong> @Model.YearFounded</p>
+<p><strong>Annual Visitors:</strong> @Model.AnnualVisitorCount</p>
+<p><strong>Inspirational Quote:</strong> @Model.InspirationalQuote</p> - @Model.QuoteSource
+<p><strong>Entry Fee:</strong> @Model.EntryFee.ToString("c2")</p>
+<p><strong>Number of Animal Species:</strong> @Model.NumberOfSpecies</p>

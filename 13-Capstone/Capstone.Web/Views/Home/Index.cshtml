@@ -7,10 +7,10 @@
 @foreach(Park park in Model)
 {
     <div class="park">
-        <a href="/Details/@park.Code"><img src="~/images/parks/@(park.Code).jpg" alt="@park.Name" /></a>
+        <a asp-action="Details" asp-route-data="@park.Code"><img src="~/images/parks/@(park.Code).jpg" alt="@park.Name" /></a>
 
         <div class="parkInfo">
-            <a href="/Details/@park.Code"><h3>@park.Name</h3></a>
+            <a asp-action="Details" asp-route-data="@park.Code"><h3>@park.Name</h3></a>
             <p>@park.State</p>
             <p>@park.Description</p>
         </div>

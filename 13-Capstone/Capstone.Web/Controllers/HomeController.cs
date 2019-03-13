@@ -30,9 +30,10 @@ namespace Capstone.Web.Controllers
             return View(parks);
         }
 
-        public IActionResult Details(string Id)
+        public IActionResult Details(string data)
         {
-            return View();
+            Park park = parkDAL.GetPark(data);
+            return View(park);
         }
 
         [HttpGet]
