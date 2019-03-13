@@ -1,4 +1,18 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<Capstone.Web.Models.Park>
+
+@{
+    ViewData["Title"] = "Index";
 }
 
+@foreach(Park park in Model)
+{
+    <div class="park">
+        <a href="/Details/@park.Code"><img src="~/images/parks/@(park.Code).jpg" alt="@park.Name" /></a>
+
+        <div class="parkInfo">
+            <a href="/Details/@park.Code"><h3>@park.Name</h3></a>
+            <p>@park.State</p>
+            <p>@park.Description</p>
+        </div>
+    </div>
+}
