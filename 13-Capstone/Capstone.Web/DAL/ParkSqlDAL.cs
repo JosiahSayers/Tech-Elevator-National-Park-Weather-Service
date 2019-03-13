@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Capstone.Web.DAL.Interfaces;
 using Capstone.Web.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Capstone.Web.DAL
 {
@@ -12,6 +13,7 @@ namespace Capstone.Web.DAL
     {
         private const string SQL_GetAllParks = "SELECT * FROM park";
         private const string SQL_GetPark = "SELECT * FROM park WHERE parkCode = @parkCode;";
+        private const string SQL_GetParks = "SELECT * FROM park ORDER BY parkName";
 
         private string connectionString;
 
@@ -108,6 +110,47 @@ namespace Capstone.Web.DAL
             }
 
             return park;
+        }
+
+        public List<SelectListItem> GetParkSelectList()
+        {
+            List<SelectListItem> output = new List<SelectListItem>();
+
+            //Always wrap connection to a database in a try-catch block
+            try
+            {
+                //Create a SqlConnection to our database
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.CommandText = SQL_GetParks;
+                    cmd.Connection = connection;
+
+                    // Execute the query to the database
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    // The results come back as a SqlDataReader. Loop through each of the rows
+                    // and add to the output list
+                    while (reader.Read())
+                    {
+                        SelectListItem item = new SelectListItem();
+
+                        item.Text = Convert.ToString(reader["parkName"]);
+                        item.Value = Convert.ToString(reader["parkCode"]);
+
+                        output.Add(item);
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                output = new List<SelectListItem>();
+            }
+
+            // Return the list of continents
+            return output;
         }
     }
 }

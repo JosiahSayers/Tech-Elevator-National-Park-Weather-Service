@@ -39,6 +39,8 @@ namespace Capstone.Web.Controllers
         [HttpGet]
         public IActionResult Survey()
         {
+            List<Park> parks = parkDAL.GetAllParks();
+            ViewBag.ParkSelectList = parkDAL.GetParkSelectList();
             return View();
         }
 
