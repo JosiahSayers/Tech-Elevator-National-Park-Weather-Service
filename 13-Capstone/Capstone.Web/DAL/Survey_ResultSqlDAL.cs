@@ -10,7 +10,8 @@ namespace Capstone.Web.DAL
 {
     public class Survey_ResultSqlDAL : ISurvey_ResultSqlDAL
     {
-        private const string SQL_GetAllSurveys = "SELECT * FROM survey_result";
+        private const string SQL_GetAllSurveys = "SELECT * FROM survey_result JOIN park on park.parkCode = survey_result.parkCode;";
+        private const string SQL_AddResult = "INSERT INTO survey_result (parkCode, emailAddress, state, activityLevel) VALUES (@parkCode, @email, @state, @activityLevel);";
 
         private string connectionString;
 
@@ -46,6 +47,31 @@ namespace Capstone.Web.DAL
             return output;
         }
 
+        public bool AddResult(Survey_Result result)
+        {
+            bool output;
 
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(SQL_AddResult, conn);
+                    cmd.Parameters.AddWithValue("@parkCode", result.ParkCode);
+                    cmd.Parameters.AddWithValue("@email", result.Email);
+                    cmd.Parameters.AddWithValue("@state", result.State);
+                    cmd.Parameters.AddWithValue("@activityLevel", result.ActivityLevel);
+
+                    cmd.ExecuteNonQuery();
+                }
+                output = true;
+            }
+            catch
+            {
+                output = false;
+            }
+
+            return output;
+        }
     }
 }
