@@ -50,6 +50,13 @@ namespace Capstone.Web.Controllers
         [HttpPost]
         public IActionResult Survey(Survey_Result surveyResult)
         {
+            survey_ResultDAL.AddResult(surveyResult);
+
+            return RedirectToAction("SurveyResults");
+        }
+
+        public IActionResult SurveyResults()
+        {
             return View();
         }
 
