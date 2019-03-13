@@ -11,6 +11,7 @@ namespace Capstone.Web.DAL
     public class WeatherSqlDAL : IWeatherSqlDAL
     {
         private const string SQL_GetWeather = "SELECT * FROM weather";
+        private const string SQL_GetWeatherForPark = "SELECT * FROM weather where parkCode = @parkCode ORDER BY fiveDayForecastValue";
 
         private string connectionString;
 
@@ -51,6 +52,40 @@ namespace Capstone.Web.DAL
             catch
             {
                 output = new List<Weather>();
+            }
+
+            return output;
+        }
+
+        public List<Weather> GetWeatherForPark(string parkCode)
+        {
+            List<Weather> output = new List<Weather>();
+
+            using(SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(SQL_GetWeatherForPark, conn);
+                cmd.Parameters.AddWithValue("@parkCode", parkCode);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while(reader.Read())
+                {
+                    Weather w = new Weather()
+                    {
+                        ParkCode = Convert.ToString(reader["parkCode"]),
+                        FiveDayForecast = Convert.ToInt32(reader["fiveDayForecastValue"]),
+                        LowTemp = Convert.ToDouble(reader["low"]),
+                        HighTemp = Convert.ToDouble(reader["high"]),
+                        Forecast = Convert.ToString(reader["forecast"])
+                    };
+
+                    if (w.Forecast == "partly cloudy")
+                    {
+                        w.Forecast = "partlyCloudy";
+                    }
+
+                    output.Add(w);
+                }
             }
 
             return output;
