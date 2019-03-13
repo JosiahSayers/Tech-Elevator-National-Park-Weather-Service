@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Capstone.Web.Models;
 using Capstone.Web.DAL.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace Capstone.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly string TEMPERATURE_SETTING_SESSION_KEY = "Temperature_Setting";
         private readonly IParkSqlDAL parkDAL;
         private readonly ISurvey_ResultSqlDAL survey_ResultDAL;
         private readonly IWeatherSqlDAL weatherDAL;
@@ -64,21 +66,15 @@ namespace Capstone.Web.Controllers
         public IActionResult Settings()
         {
             SettingsViewModel model = new SettingsViewModel();
-            if (ViewBag.TemperaturePreference != null)
-            {
-                model.TemperatureSetting = ViewBag.TemperaturePreference;
-            }
-            else
-            {
-                model.TemperatureSetting = "fahrenheit";
-            }
-            return View();
+            model.TemperatureSetting = GetCurrentTemperatureSetting();
+
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult Settings(string data)
+        public IActionResult Settings(SettingsViewModel model)
         {
-            ViewBag.TemperaturePreference = data;
+            SaveCurrentTemperatureSetting(model.TemperatureSetting);
             return RedirectToAction("Index");
         }
 
@@ -87,6 +83,24 @@ namespace Capstone.Web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private string GetCurrentTemperatureSetting()
+        {
+            string setting = HttpContext.Session.GetString(TEMPERATURE_SETTING_SESSION_KEY);
+
+            if (string.IsNullOrWhiteSpace(setting))
+            {
+                setting = "fahrenheit";
+                SaveCurrentTemperatureSetting(setting);
+            }
+
+            return setting;
+        }
+
+        private void SaveCurrentTemperatureSetting(string setting)
+        {
+            HttpContext.Session.SetString(TEMPERATURE_SETTING_SESSION_KEY, setting);
         }
     }
 }

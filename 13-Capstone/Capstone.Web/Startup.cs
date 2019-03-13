@@ -32,6 +32,15 @@ namespace Capstone.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // Enable session for the MVC Application
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                // Sets session expiration to 20 minuates
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.HttpOnly = true;
+            });
+
             string connectionString = Configuration.GetConnectionString("Default");
 
             services.AddScoped<IParkSqlDAL, ParkSqlDAL>(c => new ParkSqlDAL(connectionString));
@@ -55,6 +64,7 @@ namespace Capstone.Web
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {
