@@ -6,9 +6,14 @@
 
 <link href="~/css/Details.css" rel="stylesheet" />
 
-<div class="park-image-container">
-    <img src="~/images/parks/@(Model.Park.Code).jpg" alt="@Model.Park.Name" class="park-image" />
-</div>
+<input type="checkbox" id="image-zoom" />
+
+    <div class="park-image-container">
+        <label for="image-zoom">
+            <img src="~/images/parks/@(Model.Park.Code).jpg" alt="@Model.Park.Name" class="park-image" />
+        </label>
+    </div>
+
 
 <div class="park-header">
     <h1>@Model.Park.Name</h1>
@@ -28,8 +33,12 @@
         <p><strong>Entry Fee:</strong> @entryFee</p>
         <p><strong>Number of Animal Species:</strong> @Model.Park.NumberOfSpecies</p>
     </div>
-    <div class="quote">
-        <p>"@Model.Park.InspirationalQuote" <br /><span class="quote-attribute">- @Model.Park.QuoteSource</span></p>
+</div>
+
+<div class="quote-container">
+    <div class="quote-center">
+        <div class="quote-text"><strong>"@Model.Park.InspirationalQuote"</strong></div>
+        <div class="quote-attribute">- @Model.Park.QuoteSource</div>
     </div>
 </div>
 

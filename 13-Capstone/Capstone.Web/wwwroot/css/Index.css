@@ -1,13 +1,13 @@
 ﻿body {
 }
 
-.park-container{
+.park-container {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-.park{
+.park {
     display: flex;
     flex-direction: row;
     margin-bottom: 25px;
@@ -17,12 +17,28 @@
     margin-bottom: 50px;
 }
 
-.park img{
-    height: 175px;
-    margin-right: 45px;
-}
+    .park img {
+        height: 175px;
+        margin-right: 45px;
+    }
 
-.park-info{
+.park-info {
     display: flex;
     flex-direction: column;
+}
+
+@media only screen and (max-width: 480px) {
+    .park {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .park img {
+        margin: 0;
+    }
+
+    .park-info {
+        align-items: center;
+        text-align: justify;
+    }
 }
