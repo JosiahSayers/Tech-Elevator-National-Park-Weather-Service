@@ -30,6 +30,9 @@ namespace CapstoneTests.DAL_Tests
                 cmd = new SqlCommand("INSERT INTO park (parkCode, parkName, state, acreage, elevationInFeet, milesOfTrail, numberOfCampsites, climate, yearFounded, annualVisitorCount, inspirationalQuote, inspirationalQuoteSource, parkDescription, entryFee, numberOfAnimalSpecies) VALUES ('NPNP', 'Test Park', 'Ohio', 22222, 134, 500, 2, 'Woodland', 1980, 1, 'Quote', 'Quote Source', 'Description', 25, 5)", conn);
                 cmd.ExecuteNonQuery();
 
+                cmd = new SqlCommand("DELETE FROM survey_result", conn);
+                cmd.ExecuteNonQuery();
+
                 cmd = new SqlCommand("INSERT INTO survey_result (parkCode, emailAddress, state, activityLevel) VALUES ('NPNP', 'test5@email.com', 'Ohio', 'active');", conn);
                 cmd.ExecuteNonQuery();
                 cmd = new SqlCommand("INSERT INTO survey_result (parkCode, emailAddress, state, activityLevel) VALUES ('NPNP', 'test6@email.com', 'Ohio', 'active');", conn);
@@ -81,45 +84,17 @@ namespace CapstoneTests.DAL_Tests
         {
             Survey_ResultSqlDAL dal = new Survey_ResultSqlDAL(connectionString);
 
-            List<KeyValuePair<string, int>> doThings = dal.GetTopRankedParks();
+            List<SurveyResultViewModel> surveys = dal.GetTopRankedParks();
 
-            int result = 0;
+            bool result = false;
 
-            foreach (KeyValuePair<string, int> item in doThings)
+            if (surveys[0].ParkCode == "JSNP")
             {
-                if (item.Key == "JSNP")
-                {
-                    result = item.Value;
-                }
+                result = true;
             }
 
-            // List<string> output = new List<string>();
-            List<KeyValuePair<string, int>> output = new List<KeyValuePair<string, int>>();
 
-            foreach (KeyValuePair<string, int> item in doThings)
-            {
-                if (item.Key == "JSNP" || item.Key == "NPNP")
-                {
-                    output.Add(new KeyValuePair<string, int>(item.Key, item.Value));
-                }
-            }
-
-            bool isAlphabetical = false;
-
-            foreach (KeyValuePair<string, int> item in output)
-            {
-
-                if (item.Key == "JSNP")
-                {
-                    isAlphabetical = true;
-                }
-            }
-
-            Assert.AreEqual(3, result);
-            Assert.IsTrue(isAlphabetical);
-
-
-
+            Assert.IsTrue(result);
         }
     }
 }
