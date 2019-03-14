@@ -4,15 +4,19 @@
     ViewData["Title"] = "Index";
 }
 
-@foreach(Park park in Model)
-{
-    <div class="park">
-        <a asp-action="Details" asp-route-data="@park.Code"><img src="~/images/parks/@(park.Code).jpg" alt="@park.Name" /></a>
+<link href="~/css/Index.css" rel="stylesheet" />
 
-        <div class="parkInfo">
-            <a asp-action="Details" asp-route-data="@park.Code"><h3>@park.Name</h3></a>
-            <p>@park.State</p>
-            <p>@park.Description</p>
+<div class="parkContainer">
+    @foreach (Park park in Model)
+    {
+        <div class="park">
+            <a asp-action="Details" asp-route-data="@park.Code"><img src="~/images/parks/@(park.Code).jpg" alt="@park.Name" /></a>
+
+            <div class="parkInfo">
+                <a asp-action="Details" asp-route-data="@park.Code"><h3>@park.Name</h3></a>
+                <p>@park.State</p>
+                <p>@park.Description</p>
+            </div>
         </div>
-    </div>
-}
+    }
+</div>
