@@ -1,5 +1,6 @@
 ﻿using Capstone.Web.DAL;
 using Capstone.Web.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace CapstoneTests.DAL_Tests
                 SqlCommand cmd;
                 conn.Open();
 
-                cmd = new SqlCommand("INSERT INTO park (parkCode, parkName, state, acreage, elevationInFeet, milesOfTrail, numberOfCampsites, climate, yearFounded, annualVisitorCount, inspirationalQuote, inspirationalQuoteSource, parkDescription, entryFee, numberOfAnimalSpecies) VALUES ('ABC', 'Test Park National Park', 'Ohio', 100, 1, 10, 0, 'Woodland', 2019, 7, 'To say something inspirational you must be inspired.', 'Nick Paraskos', 'Park Description', 0, 500)", conn);
+                cmd = new SqlCommand("INSERT INTO park (parkCode, parkName, state, acreage, elevationInFeet, milesOfTrail, numberOfCampsites, climate, yearFounded, annualVisitorCount, inspirationalQuote, inspirationalQuoteSource, parkDescription, entryFee, numberOfAnimalSpecies) VALUES ('AAA', 'Test Park National Park', 'Ohio', 100, 1, 10, 0, 'Woodland', 2019, 7, 'To say something inspirational you must be inspired.', 'Nick Paraskos', 'Park Description', 0, 500)", conn);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -46,11 +47,11 @@ namespace CapstoneTests.DAL_Tests
             bool found = false;
             foreach (Park park in parks)
             {
-                if (park.Code == "ABC")
+                if (park.Code == "AAA")
                     found = true;
             }
 
-            Assert.AreEqual(true, found, "Park ABC not found in test");
+            Assert.AreEqual(true, found, "Park AAA not found in test");
             Assert.IsNotNull(parks);
         }
 
@@ -59,7 +60,7 @@ namespace CapstoneTests.DAL_Tests
         {
             ParkSqlDAL parkSqlDAL = new ParkSqlDAL(connectionString);
 
-            Park park = parkSqlDAL.GetPark("ABC");
+            Park park = parkSqlDAL.GetPark("AAA");
 
             Assert.AreEqual("Test Park National Park", park.Name);
             Assert.IsNotNull(park);
@@ -68,7 +69,22 @@ namespace CapstoneTests.DAL_Tests
         [TestMethod()]
         public void GetParkSelectList()
         {
-            //TODO
+            ParkSqlDAL parkSqlDAL = new ParkSqlDAL(connectionString);
+
+            List<SelectListItem> selectListItems = parkSqlDAL.GetParkSelectList();
+            SelectListItem newParkSelectListItem = new SelectListItem() { Text = "Test Park National Park", Value = "AAA" };
+            int index = -1;
+            for(int i= 0; i < selectListItems.Count; i++)
+            {
+                if(selectListItems[i].Text == newParkSelectListItem.Text && selectListItems[i].Value == newParkSelectListItem.Value)
+                {
+                    index = i;
+                }
+            }
+
+            Assert.IsNotNull(selectListItems);
+            Assert.AreEqual(newParkSelectListItem.Text, selectListItems[index].Text);
+            Assert.AreEqual(newParkSelectListItem.Value, selectListItems[index].Value);
         }
     }
 }
