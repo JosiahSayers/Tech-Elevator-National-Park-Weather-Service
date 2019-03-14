@@ -53,6 +53,7 @@ namespace Capstone.Web.Controllers
         [HttpPost]
         public IActionResult Survey(Survey_Result surveyResult)
         {
+            surveyResult.State = surveyResult.State.ToUpper();
             survey_ResultDAL.AddResult(surveyResult);
 
             return RedirectToAction("SurveyResults");

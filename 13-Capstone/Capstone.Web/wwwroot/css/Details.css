@@ -1,0 +1,58 @@
+﻿body {
+}
+
+.park-image-container{
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+}
+
+.park-image{
+    width: 100%;
+}
+
+.weather{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.today{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    align-self: center;
+}
+
+.today img{
+    width: 100%;
+}
+
+.daily-forecast{
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    margin-top: 50px;
+}
+
+.daily-forecast img{
+    width: 100%;
+}
+
+ul{
+    margin: 0;
+    padding: 0;
+}
+
+.hi-low{
+    margin: 10px 0;
+}
+
+@media only screen and (max-width: 480px)  {
+    .weather{
+        flex-direction: column;
+    }
+}
