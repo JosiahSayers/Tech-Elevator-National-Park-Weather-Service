@@ -10,22 +10,27 @@
     <img src="~/images/parks/@(Model.Park.Code).jpg" alt="@Model.Park.Name" class="park-image" />
 </div>
 
-<div class="parkInfo">
+<div class="park-header">
     <h1>@Model.Park.Name</h1>
 
     <p>@Model.Park.Description</p>
 
-    <p><strong>State:</strong> @Model.Park.State</p>
-    <p><strong>Acreage:</strong> @Model.Park.Acreage</p>
-    <p><strong>Elevation:</strong> @Model.Park.ElevationFt ft.</p>
-    <p><strong>Miles of Trail:</strong> @Model.Park.MilesOfTrail</p>
-    <p><strong>Number of Campsites:</strong> @Model.Park.NumberOfCampsites</p>
-    <p><strong>Climate:</strong> @Model.Park.Climate</p>
-    <p><strong>Year Founded:</strong> @Model.Park.YearFounded</p>
-    <p><strong>Annual Visitors:</strong> @Model.Park.AnnualVisitorCount</p>
-    <p><strong>Inspirational Quote:</strong> @Model.Park.InspirationalQuote</p> - @Model.Park.QuoteSource
-    <p><strong>Entry Fee:</strong> @Model.Park.EntryFee.ToString("c2")</p>
-    <p><strong>Number of Animal Species:</strong> @Model.Park.NumberOfSpecies</p>
+    <div class="park-info">
+        <p><strong>State:</strong> @Model.Park.State</p>
+        <p><strong>Acreage:</strong> @Model.Park.Acreage</p>
+        <p><strong>Elevation:</strong> @Model.Park.ElevationFt ft.</p>
+        <p><strong>Miles of Trail:</strong> @Model.Park.MilesOfTrail</p>
+        <p><strong>Number of Campsites:</strong> @Model.Park.NumberOfCampsites</p>
+        <p><strong>Climate:</strong> @Model.Park.Climate</p>
+        <p><strong>Year Founded:</strong> @Model.Park.YearFounded</p>
+        <p><strong>Annual Visitors:</strong> @Model.Park.AnnualVisitorCount</p>
+        @{string entryFee = Model.Park.EntryFee == 0 ? "Free" : Model.Park.EntryFee.ToString("C2");}
+        <p><strong>Entry Fee:</strong> @entryFee</p>
+        <p><strong>Number of Animal Species:</strong> @Model.Park.NumberOfSpecies</p>
+    </div>
+    <div class="quote">
+        <p>"@Model.Park.InspirationalQuote" <br /><span class="quote-attribute">- @Model.Park.QuoteSource</span></p>
+    </div>
 </div>
 
 @if (Model.TemperatureSetting == "celsius")
