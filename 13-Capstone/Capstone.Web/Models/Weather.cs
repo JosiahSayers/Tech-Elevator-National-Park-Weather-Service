@@ -21,19 +21,19 @@ namespace Capstone.Web.Models
 
                 if(Forecast == "snow")
                 {
-                    output = "Snow is expected, pack snowshoes!";
+                    output = "Pack snowshoes!";
                 }
                 else if (Forecast == "rain")
                 {
-                    output = "Rain is expected, pack rain gear and wear waterproof shoes!";
+                    output = "Pack rain gear and wear waterproof shoes!";
                 }
                 else if (Forecast == "thunderstorms")
                 {
-                    output = "Thunderstorms are expected, seek shelter and avoid hiking on exposed ridges!";
+                    output = "Seek shelter and avoid hiking on exposed ridges!";
                 }
                 else if (Forecast == "sunny")
                 {
-                    output = "It will be sunny today, pack sunblock!";
+                    output = "Pack sunblock!";
                 }
 
                 return output;
@@ -48,15 +48,15 @@ namespace Capstone.Web.Models
 
                 if(HighTemp > 75)
                 {
-                    output = "Its going to be a hot one, pack an extra gallon of water. ";
+                    output = "Pack an extra gallon of water! ";
                 }
                 if(HighTemp - LowTemp > 20)
                 {
-                    output += "Temperature swings may happen, wear breathable layers. ";
+                    output += "Wear breathable layers! ";
                 }
                 if(LowTemp < 20)
                 {
-                    output += "Temperature may be very low today, be careful and dress warm.";
+                    output += "Be careful and dress warm!";
                 }
 
                 return output;

@@ -4,29 +4,47 @@
     ViewData["Title"] = "Details";
 }
 
-<img src="~/images/parks/@(Model.Park.Code).jpg" alt="@Model.Park.Name" />
+<link href="~/css/Details.css" rel="stylesheet" />
 
-<div class="parkInfo">
+<input type="checkbox" id="image-zoom" />
+
+    <div class="park-image-container">
+        <label for="image-zoom">
+            <img src="~/images/parks/@(Model.Park.Code).jpg" alt="@Model.Park.Name" class="park-image" />
+        </label>
+    </div>
+
+
+<div class="park-header">
     <h1>@Model.Park.Name</h1>
 
     <p>@Model.Park.Description</p>
 
-    <p><strong>State:</strong> @Model.Park.State</p>
-    <p><strong>Acreage:</strong> @Model.Park.Acreage</p>
-    <p><strong>Elevation:</strong> @Model.Park.ElevationFt ft.</p>
-    <p><strong>Miles of Trail:</strong> @Model.Park.MilesOfTrail</p>
-    <p><strong>Number of Campsites:</strong> @Model.Park.NumberOfCampsites</p>
-    <p><strong>Climate:</strong> @Model.Park.Climate</p>
-    <p><strong>Year Founded:</strong> @Model.Park.YearFounded</p>
-    <p><strong>Annual Visitors:</strong> @Model.Park.AnnualVisitorCount</p>
-    <p><strong>Inspirational Quote:</strong> @Model.Park.InspirationalQuote</p> - @Model.Park.QuoteSource
-    <p><strong>Entry Fee:</strong> @Model.Park.EntryFee.ToString("c2")</p>
-    <p><strong>Number of Animal Species:</strong> @Model.Park.NumberOfSpecies</p>
+    <div class="park-info">
+        <p><strong>State:</strong> @Model.Park.State</p>
+        <p><strong>Acreage:</strong> @Model.Park.Acreage</p>
+        <p><strong>Elevation:</strong> @Model.Park.ElevationFt ft.</p>
+        <p><strong>Miles of Trail:</strong> @Model.Park.MilesOfTrail</p>
+        <p><strong>Number of Campsites:</strong> @Model.Park.NumberOfCampsites</p>
+        <p><strong>Climate:</strong> @Model.Park.Climate</p>
+        <p><strong>Year Founded:</strong> @Model.Park.YearFounded</p>
+        <p><strong>Annual Visitors:</strong> @Model.Park.AnnualVisitorCount</p>
+        @{string entryFee = Model.Park.EntryFee == 0 ? "Free" : Model.Park.EntryFee.ToString("C2");}
+        <p><strong>Entry Fee:</strong> @entryFee</p>
+        <p><strong>Number of Animal Species:</strong> @Model.Park.NumberOfSpecies</p>
+    </div>
 </div>
 
-@if(Model.TemperatureSetting == "celsius")
+<div class="quote-container">
+    <div class="quote-center">
+        <div class="quote-text"><strong>"@Model.Park.InspirationalQuote"</strong></div>
+        <div class="quote-attribute">- @Model.Park.QuoteSource</div>
+    </div>
+</div>
+
+@if (Model.TemperatureSetting == "celsius")
 {
-    foreach(Weather weather in Model.FiveDayWeather)
+    foreach (Weather weather in Model.FiveDayWeather)
     {
         weather.LowTemp = ((weather.LowTemp - 32.0) * (5.0 / 9.0));
         weather.HighTemp = ((weather.HighTemp - 32.0) * (5.0 / 9.0));
@@ -38,24 +56,42 @@
         <h3>Today</h3>
         <img src="~/images/weather/@(Model.FiveDayWeather[0].Forecast).png" alt="Alternate Text" />
         <div class="hi-low">
-            <span>High @Model.FiveDayWeather[0].HighTemp.ToString("N2") @Model.TemperatureSetting.Substring(0,1).ToUpper()</span>
-            <span>Low @Model.FiveDayWeather[0].LowTemp.ToString("N2") @Model.TemperatureSetting.Substring(0, 1).ToUpper()</span>
+            <span><strong>High </strong>@Model.FiveDayWeather[0].HighTemp.ToString("N2") @Model.TemperatureSetting.Substring(0, 1).ToUpper() <strong>|</strong></span>
+            <span><strong>Low </strong>@Model.FiveDayWeather[0].LowTemp.ToString("N2") @Model.TemperatureSetting.Substring(0, 1).ToUpper()</span>
         </div>
-        <span class="forecast-message">@Model.FiveDayWeather[0].ForecastMessage</span>
-        <span class="temperature-message">@Model.FiveDayWeather[0].TemperatureMessage</span>
+        <ul>
+            @if (!String.IsNullOrWhiteSpace(Model.FiveDayWeather[0].ForecastMessage))
+            {
+                <li><span class="forecast-message">@Model.FiveDayWeather[0].ForecastMessage</span></li>
+            }
+
+            @if (!String.IsNullOrWhiteSpace(Model.FiveDayWeather[0].TemperatureMessage))
+            {
+                <li><span class="temperature-message">@Model.FiveDayWeather[0].TemperatureMessage</span></li>
+            }
+        </ul>
     </div>
 
-@for (int i = 1; i < Model.FiveDayWeather.Count; i++)
-{
-    <div class="daily-forecast">
-        <img src="~/images/weather/@(Model.FiveDayWeather[i].Forecast).png" alt="@Model.FiveDayWeather[i].Forecast" />
-        <div class="hi-low">
-            <span>High @Model.FiveDayWeather[i].HighTemp.ToString("N2") @Model.TemperatureSetting.Substring(0, 1).ToUpper()</span>
-            <span>Low @Model.FiveDayWeather[i].LowTemp.ToString("N2") @Model.TemperatureSetting.Substring(0, 1).ToUpper()</span>
+    @for (int i = 1; i < Model.FiveDayWeather.Count; i++)
+    {
+        <div class="daily-forecast">
+            <img src="~/images/weather/@(Model.FiveDayWeather[i].Forecast).png" alt="@Model.FiveDayWeather[i].Forecast" />
+            <div class="hi-low">
+                <span><strong>High </strong>@Model.FiveDayWeather[i].HighTemp.ToString("N2") @Model.TemperatureSetting.Substring(0, 1).ToUpper()</span>
+                <span><strong>Low </strong>@Model.FiveDayWeather[i].LowTemp.ToString("N2") @Model.TemperatureSetting.Substring(0, 1).ToUpper()</span>
+            </div>
+            <ul>
+                @if (!String.IsNullOrWhiteSpace(Model.FiveDayWeather[i].ForecastMessage))
+                {
+                    <li><span class="forecast-message">@Model.FiveDayWeather[i].ForecastMessage</span></li>
+                }
+
+                @if (!String.IsNullOrWhiteSpace(Model.FiveDayWeather[i].TemperatureMessage))
+                {
+                    <li><span class="temperature-message">@Model.FiveDayWeather[i].TemperatureMessage</span></li>
+                }
+            </ul>
         </div>
-        <span class="forecast-message">@Model.FiveDayWeather[i].ForecastMessage</span>
-        <span class="temperature-message">@Model.FiveDayWeather[i].TemperatureMessage</span>
-    </div>
-}
+    }
 
 </div>
