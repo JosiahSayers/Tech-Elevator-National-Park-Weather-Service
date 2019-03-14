@@ -60,6 +60,10 @@
             {
                 <h3>Today</h3>
             }
+            else
+            {
+                <h4>@Model.FiveDayWeather[i].DayOfWeek</h4>
+            }
             <img src="~/images/weather/@(Model.FiveDayWeather[i].Forecast).png" alt="@Model.FiveDayWeather[i].Forecast" />
             <div class="hi-low">
                 <span><strong>High </strong>@Model.FiveDayWeather[i].HighTemp.ToString("N2") @Model.TemperatureSetting.Substring(0, 1).ToUpper()</span>

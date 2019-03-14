@@ -62,5 +62,24 @@ namespace Capstone.Web.Models
                 return output;
             }
         }
+
+        public string DayOfWeek
+        {
+            get
+            {
+                string output = "";
+                
+                if((int)DateTime.Now.DayOfWeek + (FiveDayForecast - 1) > 6)
+                {
+                    output = (DateTime.Now.DayOfWeek + (FiveDayForecast - 8)).ToString();
+                }
+                else
+                {
+                    output = (DateTime.Now.DayOfWeek + (FiveDayForecast - 1)).ToString();
+                }
+
+                return output;
+            }
+        }
     }
 }
