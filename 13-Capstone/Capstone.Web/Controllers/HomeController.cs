@@ -37,6 +37,7 @@ namespace Capstone.Web.Controllers
             DetailsViewModel model = new DetailsViewModel();
             model.Park = parkDAL.GetPark(data);
             model.FiveDayWeather = weatherDAL.GetWeatherForPark(data);
+            model.TemperatureSetting = GetCurrentTemperatureSetting();
             return View(model);
         }
 
@@ -72,6 +73,7 @@ namespace Capstone.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Settings(SettingsViewModel model)
         {
             SaveCurrentTemperatureSetting(model.TemperatureSetting);
