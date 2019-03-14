@@ -4263,7 +4263,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-fixed-top {
-  top: 0;
+  top: -1px;
+  position: sticky;
   border-width: 0 0 1px;
 }
 .navbar-fixed-bottom {

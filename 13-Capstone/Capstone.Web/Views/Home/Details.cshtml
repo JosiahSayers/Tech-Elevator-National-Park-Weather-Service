@@ -24,13 +24,22 @@
     <p><strong>Number of Animal Species:</strong> @Model.Park.NumberOfSpecies</p>
 </div>
 
+@if(Model.TemperatureSetting == "celsius")
+{
+    foreach(Weather weather in Model.FiveDayWeather)
+    {
+        weather.LowTemp = ((weather.LowTemp - 32.0) * (5.0 / 9.0));
+        weather.HighTemp = ((weather.HighTemp - 32.0) * (5.0 / 9.0));
+    }
+}
+
 <div class="weather">
     <div class="today">
         <h3>Today</h3>
         <img src="~/images/weather/@(Model.FiveDayWeather[0].Forecast).png" alt="Alternate Text" />
         <div class="hi-low">
-            <span>High @Model.FiveDayWeather[0].HighTemp</span>
-            <span>Low @Model.FiveDayWeather[0].LowTemp</span>
+            <span>High @Model.FiveDayWeather[0].HighTemp.ToString("N2") @Model.TemperatureSetting.Substring(0,1).ToUpper()</span>
+            <span>Low @Model.FiveDayWeather[0].LowTemp.ToString("N2") @Model.TemperatureSetting.Substring(0, 1).ToUpper()</span>
         </div>
         <span class="forecast-message">@Model.FiveDayWeather[0].ForecastMessage</span>
         <span class="temperature-message">@Model.FiveDayWeather[0].TemperatureMessage</span>
@@ -41,8 +50,8 @@
     <div class="daily-forecast">
         <img src="~/images/weather/@(Model.FiveDayWeather[i].Forecast).png" alt="@Model.FiveDayWeather[i].Forecast" />
         <div class="hi-low">
-            <span>High @Model.FiveDayWeather[i].HighTemp</span>
-            <span>Low @Model.FiveDayWeather[i].LowTemp</span>
+            <span>High @Model.FiveDayWeather[i].HighTemp.ToString("N2") @Model.TemperatureSetting.Substring(0, 1).ToUpper()</span>
+            <span>Low @Model.FiveDayWeather[i].LowTemp.ToString("N2") @Model.TemperatureSetting.Substring(0, 1).ToUpper()</span>
         </div>
         <span class="forecast-message">@Model.FiveDayWeather[i].ForecastMessage</span>
         <span class="temperature-message">@Model.FiveDayWeather[i].TemperatureMessage</span>
