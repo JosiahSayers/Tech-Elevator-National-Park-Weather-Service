@@ -1,0 +1,26 @@
+﻿body {
+}
+
+.parkContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.park{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 25px;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.park img{
+    height: 175px;
+    margin-right: 45px;
+}
+
+.parkInfo{
+    display: flex;
+    flex-direction: column;
+}
