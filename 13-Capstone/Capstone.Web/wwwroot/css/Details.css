@@ -3,12 +3,13 @@
     pointer-events: none;
 }
 
-.park-image-container{
+.park-image-container {
     width: 100%;
     height: 400px;
     overflow: hidden;
     position: relative;
     cursor: pointer;
+    border-radius: 20px;
 }
 
 .park-image-container label {
@@ -17,6 +18,7 @@
 
 .park-image {
     transition: 0.5s;
+    border-radius: 20px;
 }
 
 .park-image:hover{
