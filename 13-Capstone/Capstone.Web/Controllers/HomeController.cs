@@ -63,6 +63,7 @@ namespace Capstone.Web.Controllers
             SurveyResultViewModel surveys = new SurveyResultViewModel();
 
             surveys.GetTopRankedParks = survey_ResultDAL.GetTopRankedParks();
+            surveys.Parks = parkDAL.GetAllParks();
 
             return View(surveys);
         }
