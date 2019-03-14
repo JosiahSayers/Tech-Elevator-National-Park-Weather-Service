@@ -52,29 +52,14 @@
 }
 
 <div class="weather">
-    <div class="today">
-        <h3>Today</h3>
-        <img src="~/images/weather/@(Model.FiveDayWeather[0].Forecast).png" alt="Alternate Text" />
-        <div class="hi-low">
-            <span><strong>High </strong>@Model.FiveDayWeather[0].HighTemp.ToString("N2") @Model.TemperatureSetting.Substring(0, 1).ToUpper() <strong>|</strong></span>
-            <span><strong>Low </strong>@Model.FiveDayWeather[0].LowTemp.ToString("N2") @Model.TemperatureSetting.Substring(0, 1).ToUpper()</span>
-        </div>
-        <ul>
-            @if (!String.IsNullOrWhiteSpace(Model.FiveDayWeather[0].ForecastMessage))
-            {
-                <li><span class="forecast-message">@Model.FiveDayWeather[0].ForecastMessage</span></li>
-            }
-
-            @if (!String.IsNullOrWhiteSpace(Model.FiveDayWeather[0].TemperatureMessage))
-            {
-                <li><span class="temperature-message">@Model.FiveDayWeather[0].TemperatureMessage</span></li>
-            }
-        </ul>
-    </div>
-
-    @for (int i = 1; i < Model.FiveDayWeather.Count; i++)
+    @for (int i = 0; i < Model.FiveDayWeather.Count; i++)
     {
-        <div class="daily-forecast">
+        string className = i == 0 ? "today" : "daily-forecast";
+        <div class="@className">
+            @if(i == 0)
+            {
+                <h3>Today</h3>
+            }
             <img src="~/images/weather/@(Model.FiveDayWeather[i].Forecast).png" alt="@Model.FiveDayWeather[i].Forecast" />
             <div class="hi-low">
                 <span><strong>High </strong>@Model.FiveDayWeather[i].HighTemp.ToString("N2") @Model.TemperatureSetting.Substring(0, 1).ToUpper()</span>
