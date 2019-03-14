@@ -27,12 +27,20 @@ namespace CapstoneTests.DAL_Tests
 
                 cmd = new SqlCommand("INSERT INTO park (parkCode, parkName, state, acreage, elevationInFeet, milesOfTrail, numberOfCampsites, climate, yearFounded, annualVisitorCount, inspirationalQuote, inspirationalQuoteSource, parkDescription, entryFee, numberOfAnimalSpecies) VALUES ('JSNP', 'Test Park', 'Ohio', 22222, 134, 500, 2, 'Woodland', 1980, 1, 'Quote', 'Quote Source', 'Description', 25, 5)", conn);
                 cmd.ExecuteNonQuery();
+                cmd = new SqlCommand("INSERT INTO park (parkCode, parkName, state, acreage, elevationInFeet, milesOfTrail, numberOfCampsites, climate, yearFounded, annualVisitorCount, inspirationalQuote, inspirationalQuoteSource, parkDescription, entryFee, numberOfAnimalSpecies) VALUES ('NPNP', 'Test Park', 'Ohio', 22222, 134, 500, 2, 'Woodland', 1980, 1, 'Quote', 'Quote Source', 'Description', 25, 5)", conn);
+                cmd.ExecuteNonQuery();
 
-                cmd = new SqlCommand("INSERT INTO survey_result (parkCode, emailAddress, state, activityLevel) VALUES ('JSNP', 'test@email.com', 'Ohio', 'inactive');", conn);
+                cmd = new SqlCommand("INSERT INTO survey_result (parkCode, emailAddress, state, activityLevel) VALUES ('NPNP', 'test5@email.com', 'Ohio', 'active');", conn);
+                cmd.ExecuteNonQuery();
+                cmd = new SqlCommand("INSERT INTO survey_result (parkCode, emailAddress, state, activityLevel) VALUES ('NPNP', 'test6@email.com', 'Ohio', 'active');", conn);
+                cmd.ExecuteNonQuery();
+                cmd = new SqlCommand("INSERT INTO survey_result (parkCode, emailAddress, state, activityLevel) VALUES ('NPNP', 'test@email.com', 'Ohio', 'inactive');", conn);
                 cmd.ExecuteNonQuery();
                 cmd = new SqlCommand("INSERT INTO survey_result (parkCode, emailAddress, state, activityLevel) VALUES ('JSNP', 'test2@email.com', 'Ohio', 'sedentary');", conn);
                 cmd.ExecuteNonQuery();
                 cmd = new SqlCommand("INSERT INTO survey_result (parkCode, emailAddress, state, activityLevel) VALUES ('JSNP', 'test3@email.com', 'Ohio', 'active');", conn);
+                cmd.ExecuteNonQuery();
+                cmd = new SqlCommand("INSERT INTO survey_result (parkCode, emailAddress, state, activityLevel) VALUES ('JSNP', 'test4@email.com', 'Ohio', 'active');", conn);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -51,7 +59,7 @@ namespace CapstoneTests.DAL_Tests
 
             CollectionAssert.AllItemsAreNotNull(results);
             Assert.IsNotNull(results);
-            Assert.AreEqual(3, results.Count);
+            Assert.AreEqual(6, results.Count);
         }
 
         [TestMethod]
@@ -60,7 +68,7 @@ namespace CapstoneTests.DAL_Tests
             Survey_ResultSqlDAL dal = new Survey_ResultSqlDAL(connectionString);
             List<Survey_Result> priorResults = dal.GetAllSurveys();
 
-            bool addSuccessful = dal.AddResult(new Survey_Result(){ ParkCode = "JSNP", Email = "test4@email.com", State = "Ohio", ActivityLevel = "Very Active"});
+            bool addSuccessful = dal.AddResult(new Survey_Result() { ParkCode = "JSNP", Email = "test4@email.com", State = "Ohio", ActivityLevel = "Very Active" });
 
             List<Survey_Result> newResults = dal.GetAllSurveys();
 
@@ -69,9 +77,49 @@ namespace CapstoneTests.DAL_Tests
         }
 
         [TestMethod]
-        public void GetTopRAnkedParksTest()
+        public void GetTopRankedParksTest()
         {
-            //TODO
+            Survey_ResultSqlDAL dal = new Survey_ResultSqlDAL(connectionString);
+
+            List<KeyValuePair<string, int>> doThings = dal.GetTopRankedParks();
+
+            int result = 0;
+
+            foreach (KeyValuePair<string, int> item in doThings)
+            {
+                if (item.Key == "JSNP")
+                {
+                    result = item.Value;
+                }
+            }
+
+            // List<string> output = new List<string>();
+            List<KeyValuePair<string, int>> output = new List<KeyValuePair<string, int>>();
+
+            foreach (KeyValuePair<string, int> item in doThings)
+            {
+                if (item.Key == "JSNP" || item.Key == "NPNP")
+                {
+                    output.Add(new KeyValuePair<string, int>(item.Key, item.Value));
+                }
+            }
+
+            bool isAlphabetical = false;
+
+            foreach (KeyValuePair<string, int> item in output)
+            {
+
+                if (item.Key == "JSNP")
+                {
+                    isAlphabetical = true;
+                }
+            }
+
+            Assert.AreEqual(3, result);
+            Assert.IsTrue(isAlphabetical);
+
+
+
         }
     }
 }

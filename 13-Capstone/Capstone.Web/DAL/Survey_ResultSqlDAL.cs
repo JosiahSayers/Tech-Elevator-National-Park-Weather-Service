@@ -77,7 +77,7 @@ namespace Capstone.Web.DAL
         public List<KeyValuePair<string, int>> GetTopRankedParks()
         {
             List<Survey_Result> allSurveys = GetAllSurveys();
-            //should i make an instance of parksqldal and get the list of parks this way?
+          
             Dictionary<string, int> parks = new Dictionary<string, int>();
 
             IParkSqlDAL parkDAL = new ParkSqlDAL(connectionString);
