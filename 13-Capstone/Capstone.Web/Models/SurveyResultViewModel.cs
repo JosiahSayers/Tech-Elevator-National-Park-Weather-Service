@@ -7,7 +7,8 @@ namespace Capstone.Web.Models
 {
     public class SurveyResultViewModel
     {
-        public List<Park> Parks { get; set; }
-        public List<KeyValuePair<string, int>> GetTopRankedParks { get; set; }
+        public string ParkCode { get; set; }
+        public string ParkName { get; set; }
+        public int VoteCount { get; set; }
     }
 }

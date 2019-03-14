@@ -12,6 +12,7 @@ namespace Capstone.Web.DAL
     {
         private const string SQL_GetAllSurveys = "SELECT * FROM survey_result JOIN park on park.parkCode = survey_result.parkCode;";
         private const string SQL_AddResult = "INSERT INTO survey_result (parkCode, emailAddress, state, activityLevel) VALUES (@parkCode, @email, @state, @activityLevel);";
+        private const string SQL_GetTopRankedParks = "SELECT COUNT(survey_result.parkCode) as numVotes, park.parkName, survey_result.parkCode FROM survey_result JOIN park ON park.parkCode = survey_result.parkCode GROUP BY parkName, survey_result.parkCode ORDER BY numVotes DESC, parkName ASC, parkCode";
 
         private string connectionString;
 
@@ -74,36 +75,28 @@ namespace Capstone.Web.DAL
             return output;
         }
 
-        public List<KeyValuePair<string, int>> GetTopRankedParks()
+        public List<SurveyResultViewModel> GetTopRankedParks()
         {
-            List<Survey_Result> allSurveys = GetAllSurveys();
-          
-            Dictionary<string, int> parks = new Dictionary<string, int>();
+            List<SurveyResultViewModel> output = new List<SurveyResultViewModel>();
 
-            IParkSqlDAL parkDAL = new ParkSqlDAL(connectionString);
-
-            List<Park> allParks = parkDAL.GetAllParks();
-
-            foreach (Park item in allParks)
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                parks.Add(item.Code, 0);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(SQL_GetTopRankedParks, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    SurveyResultViewModel srvm = new SurveyResultViewModel();
+
+                    srvm.ParkCode = Convert.ToString(reader["parkCode"]);
+                    srvm.ParkName = Convert.ToString(reader["parkName"]);
+                    srvm.VoteCount = Convert.ToInt32(reader["numVotes"]);
+
+
+                    output.Add(srvm);
+                }
             }
-
-            foreach (Survey_Result surveyResult in allSurveys)
-            {
-                parks[surveyResult.ParkCode] += 1;
-            }
-
-            List<KeyValuePair<string, int>> output = parks.ToList();
-
-            output.Reverse();
-
-            output.Sort(delegate (KeyValuePair<string, int> a, KeyValuePair<string, int> b)
-            {
-                return a.Value.CompareTo(b.Value);
-            });
-
-            output.Reverse();
 
             return output;
         }

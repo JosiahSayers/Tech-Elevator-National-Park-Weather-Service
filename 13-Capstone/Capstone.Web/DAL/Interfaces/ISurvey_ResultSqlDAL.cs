@@ -10,6 +10,6 @@ namespace Capstone.Web.DAL.Interfaces
     {
         List<Survey_Result> GetAllSurveys(); 
         bool AddResult(Survey_Result result);
-        List<KeyValuePair<string, int>> GetTopRankedParks();
+        List<SurveyResultViewModel> GetTopRankedParks();
     }
 }
