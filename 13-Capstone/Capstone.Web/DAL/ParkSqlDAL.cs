@@ -11,9 +11,8 @@ namespace Capstone.Web.DAL
 {
     public class ParkSqlDAL : IParkSqlDAL
     {
-        private const string SQL_GetAllParks = "SELECT * FROM park";
         private const string SQL_GetPark = "SELECT * FROM park WHERE parkCode = @parkCode;";
-        private const string SQL_GetParks = "SELECT * FROM park ORDER BY parkName";
+        private const string SQL_GetParks = "SELECT * FROM park ORDER BY parkName ASC";
 
         private string connectionString;
 
@@ -32,7 +31,7 @@ namespace Capstone.Web.DAL
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand(SQL_GetAllParks, conn);
+                    SqlCommand cmd = new SqlCommand(SQL_GetParks, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())

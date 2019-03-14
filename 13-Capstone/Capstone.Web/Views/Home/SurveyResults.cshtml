@@ -6,33 +6,37 @@
     ViewData["Title"] = "SurveyResults";
 }
 
-<h6>Thank you for completing the survey!</h6>
+<h4>Thank you for completing the survey!</h4>
 
 <h2>Top Park Rankings</h2>
 
-<p>Below you will find the National Parks ranked from highest to lowest</p>
-<div>
+<p>Below you will find the top voted National Park! Feel free to click on the picture to get more details on the National Park.</p>
+<div class="top-ranked-parks">
     @{
         foreach (KeyValuePair<string, int> item in Model.GetTopRankedParks)
         {
             if (item.Value > 0)
             {
-                <div class="park-image">
-                    <img src="~/images/parks/@(item.Key).jpg" />
-                </div>
-                <div class="park-name">
-                    @foreach (Park park in Model.Parks)
-                    {
-                        if (park.Code == item.Key)
-                        {
-                            <p>@park.Name</p>
+                <div class="parks">
+                    <div class="park-picture">
+                        <a asp-action="Details" asp-route-data="@item.Key"><img src="~/images/parks/@(item.Key).jpg" class="park-image" /></a>
+                    </div>
+                    <div class="park-info">
+                        <div class="park-name">
+                            @foreach (Park park in Model.Parks)
+                            {
+                                if (park.Code == item.Key)
+                                {
+                                    <p>@park.Name</p>
 
-                        }
+                                }
 
-                    }
-                </div>
-                <div>
-                    <p>@item.Value</p>
+                            }
+                        </div>
+                        <div class="total-votes">
+                            <p><strong>Total Votes: @item.Value</strong></p>
+                        </div>
+                    </div>
                 </div>
             }
         }

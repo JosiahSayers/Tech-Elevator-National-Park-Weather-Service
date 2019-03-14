@@ -81,7 +81,7 @@ namespace Capstone.Web.DAL
             Dictionary<string, int> parks = new Dictionary<string, int>();
 
             IParkSqlDAL parkDAL = new ParkSqlDAL(connectionString);
-                
+
             List<Park> allParks = parkDAL.GetAllParks();
 
             foreach (Park item in allParks)
@@ -96,9 +96,11 @@ namespace Capstone.Web.DAL
 
             List<KeyValuePair<string, int>> output = parks.ToList();
 
-            output.Sort(delegate (KeyValuePair<string, int> pair1, KeyValuePair<string, int> pair2)
+            output.Reverse();
+
+            output.Sort(delegate (KeyValuePair<string, int> a, KeyValuePair<string, int> b)
             {
-                return pair1.Value.CompareTo(pair2.Value);
+                return a.Value.CompareTo(b.Value);
             });
 
             output.Reverse();
