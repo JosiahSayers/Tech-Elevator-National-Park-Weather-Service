@@ -73,5 +73,37 @@ namespace Capstone.Web.DAL
 
             return output;
         }
+
+        public List<KeyValuePair<string, int>> GetTopRankedParks()
+        {
+            List<Survey_Result> allSurveys = GetAllSurveys();
+            //should i make an instance of parksqldal and get the list of parks this way?
+            Dictionary<string, int> parks = new Dictionary<string, int>();
+
+            IParkSqlDAL parkDAL = new ParkSqlDAL(connectionString);
+                
+            List<Park> allParks = parkDAL.GetAllParks();
+
+            foreach (Park item in allParks)
+            {
+                parks.Add(item.Code, 0);
+            }
+
+            foreach (Survey_Result surveyResult in allSurveys)
+            {
+                parks[surveyResult.ParkCode] += 1;
+            }
+
+            List<KeyValuePair<string, int>> output = parks.ToList();
+
+            output.Sort(delegate (KeyValuePair<string, int> pair1, KeyValuePair<string, int> pair2)
+            {
+                return pair1.Value.CompareTo(pair2.Value);
+            });
+
+            output.Reverse();
+
+            return output;
+        }
     }
 }

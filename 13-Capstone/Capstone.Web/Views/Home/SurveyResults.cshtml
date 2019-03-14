@@ -1,7 +1,27 @@
-﻿
+﻿@model SurveyResultViewModel
+
+
 @{
     ViewData["Title"] = "SurveyResults";
 }
 
-<h2>SurveyResults</h2>
+<h1>Thank you for completing the survey!</h1>
 
+<h2>Top Park Rankings</h2>
+
+<p>Below you will find the National Parks ranked from highest to lowest</p>
+
+@{
+    foreach (KeyValuePair<string, int> item in Model.GetTopRankedParks)
+    {
+        if (item.Value > 0)
+        {
+            <img src="~/images/parks/@(item.Key).jpg"/>
+            <p>@item.Key</p>
+            <p>@item.Value</p>
+        }
+    }
+
+
+
+}

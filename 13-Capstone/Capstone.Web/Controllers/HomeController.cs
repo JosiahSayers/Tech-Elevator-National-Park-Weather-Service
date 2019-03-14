@@ -57,7 +57,11 @@ namespace Capstone.Web.Controllers
 
         public IActionResult SurveyResults()
         {
-            return View();
+            SurveyResultViewModel surveys = new SurveyResultViewModel();
+
+            surveys.GetTopRankedParks = survey_ResultDAL.GetTopRankedParks();
+
+            return View(surveys);
         }
 
         [HttpGet]
