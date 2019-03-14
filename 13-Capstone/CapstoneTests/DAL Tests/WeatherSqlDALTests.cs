@@ -73,7 +73,14 @@ namespace CapstoneTests.DAL_Tests
         [TestMethod()]
         public void GetWeatherForParkTest()
         {
-            //TODO
+            WeatherSqlDAL weatherSqlDAL = new WeatherSqlDAL(connectionString);
+
+            List<Weather> weatherForPark = weatherSqlDAL.GetWeatherForPark("ABC");
+
+            Assert.AreEqual(5, weatherForPark.Count);
+            Assert.AreEqual("rain", weatherForPark[0].Forecast);
+            Assert.AreEqual(5, weatherForPark[4].FiveDayForecast);
+            Assert.AreEqual(70, weatherForPark[3].LowTemp);
         }
     }
 }
