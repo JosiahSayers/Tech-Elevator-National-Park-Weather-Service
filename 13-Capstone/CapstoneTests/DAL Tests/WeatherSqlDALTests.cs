@@ -59,7 +59,7 @@ namespace CapstoneTests.DAL_Tests
             List<Weather> weathers = weatherSqlDAL.GetWeather();
 
             int result = 0;
-            foreach(Weather weather in weathers)
+            foreach (Weather weather in weathers)
             {
                 if (weather.ParkCode == "ABC")
                 {
@@ -68,7 +68,12 @@ namespace CapstoneTests.DAL_Tests
             }
 
             Assert.AreEqual(5, result);
+        }
 
+        [TestMethod()]
+        public void GetWeatherForParkTest()
+        {
+            //TODO
         }
     }
 }

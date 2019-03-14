@@ -64,5 +64,11 @@ namespace CapstoneTests.DAL_Tests
             Assert.AreEqual("Test Park National Park", park.Name);
             Assert.IsNotNull(park);
         }
+
+        [TestMethod()]
+        public void GetParkSelectList()
+        {
+            //TODO
+        }
     }
 }
